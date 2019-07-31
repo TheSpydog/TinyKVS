@@ -17,21 +17,22 @@ TinyKVS.Update();
 
 To detect external changes to KVS data:
 ```cs
+// In your code somewhere...
 void KVSExternalChangeCallback(TinyKVS.ChangeReason changeReason, string[] keysChanged)
 {
-	// Do something...
+	// Do something about the change
 }
 
 // When your app starts...
-TinyKVS.OnExternalChange += ExternalChangeCallback;
+TinyKVS.OnExternalChange += KVSExternalChangeCallback;
 ```
 
 To fetch information from KVS:
 ```cs
-bool myBool = TinyKVS.GetBool("example_key_1");
-byte[] myData = TinyKVS.GetData("example_key_2");
+bool myBool     = TinyKVS.GetBool("example_key_1");
+byte[] myData   = TinyKVS.GetData("example_key_2");
 double myDouble = TinyKVS.GetDouble("example_key_3");
-long mylong = TinyKVS.GetLong("example_key_4");
+long mylong     = TinyKVS.GetLong("example_key_4");
 string myString = TinyKVS.GetString("example_key_5");
 ```
 
@@ -60,6 +61,6 @@ To remove information from KVS:
 ```cs
 TinyKVS.RemoveKeyValuePair("key_to_remove");
 
-// Or if you want to clear all the data...
+// If you want to clear all the data...
 TinyKVS.RemoveAllKeyValuePairs();
 ```
