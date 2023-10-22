@@ -139,6 +139,13 @@ namespace TinyKVS
         private static IntPtr classNSPropertyListSerialization = objc_getClass("NSPropertyListSerialization");
         private static IntPtr classNSData = objc_getClass("NSData");
 
+        // Delegates
+        
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private delegate void StoreDidChangeHandlerDelegate(IntPtr self, IntPtr _cmd, IntPtr notification);
+        
+        private static StoreDidChangeHandlerDelegate StoreDidChangeHandlerAction = StoreDidChangeHandler;
+        
         #endregion
 
         #region Private Utilities
@@ -241,7 +248,7 @@ namespace TinyKVS
             byte addedMethod = class_addMethod(
                 classNSUbiquitousKeyValueStore,
                 selStoreDidChange,
-                Marshal.GetFunctionPointerForDelegate<Action<IntPtr, IntPtr, IntPtr>>(StoreDidChangeHandler),
+                Marshal.GetFunctionPointerForDelegate(StoreDidChangeHandlerAction),
                 "v@:@"
             );
             if (addedMethod == 0)
